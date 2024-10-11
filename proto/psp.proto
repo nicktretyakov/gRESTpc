@@ -1,0 +1,38 @@
+syntax = "proto3";
+import "empty.proto";
+import "user.proto";
+import "bank.proto";
+import "google/protobuf/timestamp.proto";
+package training;
+option go_package = "./;pb";
+
+service PspService {
+    rpc CreatePsp(PspRequest) returns (Psp);
+    rpc ViewPsp(ViewPspRequest) returns (Psp);
+    rpc CancelPsp(CancelPspRequest) returns (Empty);
+}
+
+message Psp {
+    string id = 1;
+    string code = 2;
+    User user = 3;
+    Bank bank = 4;
+    google.protobuf.Timestamp booked_date = 5;
+    string status = 6;
+}
+
+message PspRequest {
+    string id = 1;
+    int64 user_id = 2;
+    int64 bank_id = 3;
+    string code = 4;
+    google.protobuf.Timestamp booked_date = 5;
+}
+
+message ViewPspRequest {
+    string psp_id = 1;
+}
+
+message CancelPspRequest {
+    string psp_id = 1;
+}
